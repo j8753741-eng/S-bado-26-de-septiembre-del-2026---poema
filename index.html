@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donde mi corazón te guarda sin hacer ruido</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255, 211, 160, 0.08), transparent 28%),
+        radial-gradient(circle at 20% 80%, rgba(255, 125, 155, 0.07), transparent 25%),
+        #130d12;
+      color: #f8eee9;
+      overflow-x: hidden;
+    }
+
+    /* Partículas suaves */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255, 225, 201, 0.55);
+      animation: float 8s infinite ease-in-out;
+    }
+
+    .particle:nth-child(1) { left: 12%; top: 22%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 28%; top: 70%; animation-delay: 2s; }
+    .particle:nth-child(3) { left: 76%; top: 25%; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 88%; top: 68%; animation-delay: 1s; }
+    .particle:nth-child(5) { left: 52%; top: 12%; animation-delay: 3s; }
+    .particle:nth-child(6) { left: 62%; top: 83%; animation-delay: 5s; }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: .25;
+      }
+      50% {
+        transform: translateY(-22px) scale(1.7);
+        opacity: .8;
+      }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+      padding: 35px 18px 60px;
+    }
+
+    /* Encabezado tipo secreto */
+    .top {
+      text-align: center;
+      margin-bottom: 35px;
+      animation: appear 1.4s ease forwards;
+    }
+
+    .date {
+      display: inline-block;
+      padding: 8px 18px;
+      border: 1px solid rgba(231, 180, 130, .35);
+      border-radius: 30px;
+      color: #dcb18d;
+      font-size: .75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .top h1 {
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      line-height: 1.15;
+      font-weight: normal;
+      color: #fff4ed;
+      letter-spacing: 1px;
+    }
+
+    .top p {
+      margin-top: 14px;
+      color: #bca8a2;
+      font-size: .9rem;
+      letter-spacing: 1px;
+    }
+
+    /* Contenedor principal */
+    .heart-room {
+      position: relative;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.045),
+          rgba(255,255,255,.015)
+        );
+      border: 1px solid rgba(229, 181, 144, .28);
+      border-radius: 34px;
+      padding: 55px clamp(24px, 7vw, 70px);
+      box-shadow:
+        0 30px 90px rgba(0,0,0,.45),
+        inset 0 0 50px rgba(255, 187, 145, .025);
+      backdrop-filter: blur(12px);
+      animation: roomIn 1.5s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    @keyframes roomIn {
+      from {
+        opacity: 0;
+        transform: translateY(35px) scale(.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Detalle central */
+    .seal {
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 35px;
+      border: 1px solid rgba(231, 180, 130, .55);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e7b482;
+      font-size: 1.5rem;
+      box-shadow: 0 0 35px rgba(231,180,130,.08);
+      animation: pulse 4s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.06);
+      }
+    }
+
+    .poem {
+      text-align: center;
+      font-size: clamp(1.05rem, 3.5vw, 1.3rem);
+      line-height: 2;
+      color: #f5e8e2;
+    }
+
+    .poem strong {
+      display: block;
+      margin: 15px 0 28px;
+      color: #f2c39f;
+      font-weight: normal;
+      font-size: 1.08em;
+    }
+
+    .poem .highlight {
+      color: #fff1e9;
+      font-style: italic;
+    }
+
+    .final {
+      margin-top: 35px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(229,181,144,.16);
+      font-size: clamp(1.08rem, 3.7vw, 1.35rem);
+      line-height: 1.8;
+      color: #f7ddd0;
+    }
+
+    .signature {
+      margin-top: 42px;
+      text-align: center;
+      color: #c99b7d;
+      font-size: .78rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* Botón */
+    .little-button {
+      display: block;
+      width: fit-content;
+      margin: 38px auto 0;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(231,180,130,.35);
+      background: transparent;
+      color: #d9b59b;
+      font-family: inherit;
+      cursor: pointer;
+      transition: .35s ease;
+    }
+
+    .little-button:hover {
+      background: rgba(231,180,130,.08);
+      transform: translateY(-2px);
+    }
+
+    .secret {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      text-align: center;
+      color: #c9b4ad;
+      line-height: 1.7;
+      transition: max-height .8s ease, opacity .8s ease, margin .8s ease;
+    }
+
+    .secret.show {
+      max-height: 150px;
+      opacity: 1;
+      margin-top: 22px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 28px;
+      color: #806f6b;
+      font-size: .72rem;
+      letter-spacing: 2px;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(-15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .wrapper {
+        padding: 25px 13px 45px;
+      }
+
+      .heart-room {
+        border-radius: 26px;
+        padding: 42px 22px;
+      }
+
+      .poem {
+        line-height: 1.85;
+      }
+
+      .top h1 {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="particles">
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+  </div>
+
+  <main class="wrapper">
+
+    <header class="top">
+      <div class="date">Sábado · 26 de septiembre · 2026</div>
+
+      <h1>✦ DONDE MI CORAZÓN TE GUARDA SIN HACER RUIDO ✦</h1>
+
+      <p>Una pequeña parte de mi corazón quedó aquí esperándote.</p>
+    </header>
+
+    <section class="heart-room">
+
+      <div class="seal">♡</div>
+
+      <div class="poem">
+
+        <strong>Para ti, mi Lucero de mi Piel.</strong>
+
+        <p>
+          Desde temprano dejé estas palabras esperándote,<br>
+          porque aunque las leas al despertar, al mediodía o cuando termine tu día,<br>
+          quiero que sientas que mi amor ya estaba aquí, buscándote antes que cualquier otra cosa.
+        </p>
+
+        <br>
+
+        <p>
+          Valeria,<br>
+          hay algo de ti que no sé explicar:<br>
+          una manera de quedarte en mi pensamiento,<br>
+          de hacerme suspirar sin tocarme<br>
+          y de encenderme el corazón solamente con recordarte.
+        </p>
+
+        <br>
+
+        <p>
+          Si pudiera elegir dónde despertar cada día,<br>
+          elegiría siempre el lugar donde estés tú.<br>
+          Y si pudiera volver a elegir a quién amar,<br>
+          sin pensarlo, con el alma completa,<br>
+          volvería a elegirte a ti.
+        </p>
+
+        <br>
+
+        <p>
+          Porque no eres solamente mi amor,<br>
+          eres esa parte de mi vida que mi corazón<br>
+          ya no sabe imaginar lejos de él.
+        </p>
+
+        <div class="final">
+          <span class="highlight">
+            Te amo con una intensidad que no sabe quedarse pequeña,<br>
+            mi Lucero de mi Piel.
+          </span>
+          ❤️
+        </div>
+
+      </div>
+
+      <button class="little-button" onclick="openSecret()">
+        abrir un pequeño secreto
+      </button>
+
+      <div class="secret" id="secret">
+        Esta carta estuvo lista desde temprano.<br>
+        No importa a qué hora llegues hasta ella:<br>
+        mi amor ya estaba esperándote.
+      </div>
+
+      <div class="signature">
+        Hecho para ti, con todo mi corazón
+      </div>
+
+    </section>
+
+    <footer>
+      SÁBADO 26 · SOLO PARA TI
+    </footer>
+
+  </main>
+
+  <script>
+    function openSecret() {
+      const secret = document.getElementById("secret");
+      secret.classList.toggle("show");
+    }
+  </script>
+
+</body>
+</html>
